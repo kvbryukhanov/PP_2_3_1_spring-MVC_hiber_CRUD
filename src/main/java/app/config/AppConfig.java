@@ -21,6 +21,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -29,7 +30,6 @@ import java.util.Properties;
 @ComponentScan("app")
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
-@EnableJpaRepositories("app.repositories")
 public class AppConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
@@ -47,7 +47,7 @@ public class AppConfig implements WebMvcConfigurer {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/WEB-INF/pages/");
+        templateResolver.setPrefix("WEB-INF/pages/");
         templateResolver.setSuffix(".html");
         return templateResolver;
     }
@@ -84,6 +84,7 @@ public class AppConfig implements WebMvcConfigurer {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         return properties;
     }
 
@@ -94,6 +95,7 @@ public class AppConfig implements WebMvcConfigurer {
         factoryBean.setPackagesToScan("app.model");
 
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        //vendorAdapter.setDatabasePlatform(environment.getProperty("hibernate.dialect"));
         factoryBean.setJpaVendorAdapter(vendorAdapter);
         factoryBean.setJpaProperties(hibernateProperties());
 
@@ -106,5 +108,10 @@ public class AppConfig implements WebMvcConfigurer {
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
+
+//    @Bean
+//    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+//        return new JpaTransactionManager(emf);
+//    }
 
 }
