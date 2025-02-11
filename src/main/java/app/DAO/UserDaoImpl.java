@@ -1,10 +1,12 @@
 package app.DAO;
 
 import app.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -14,13 +16,14 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<User> index() {
         return entityManager.createQuery("from User", User.class).getResultList();
+        //return null;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public User show(int id) {
         return null;

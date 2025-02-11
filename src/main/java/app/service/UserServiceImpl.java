@@ -1,7 +1,6 @@
 package app.service;
 
 import app.DAO.UserDao;
-import app.DAO.UserDaoImpl;
 import app.model.User;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +8,11 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     private final UserDao userDao;
 
-    public UserServiceImpl(UserDao UserDaoImpl) {
-        this.userDao = UserDaoImpl;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
