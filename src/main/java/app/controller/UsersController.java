@@ -67,7 +67,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "/delete")
-    public String delete(ModelMap model, @RequestParam int id) {
+    public String delete(@RequestParam int id) {
         userService.delete(id);
         return "redirect:index";
     }
