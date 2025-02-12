@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Users</title>
 </head>
 <body>
-<div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
+
+<div th:each="user:${users}">
+    <a th:href="@{/show(id=${user.id})}" th:text="${user.firstName} + ' ' + ${user.lastName}"></a>
 </div>
+<br>
+<br>
+
+<a href="/create">Create new user </a>
+
 </body>
 </html>

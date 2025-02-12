@@ -1,6 +1,8 @@
 package app.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
 
 @Entity
 @Table(name = "user")
@@ -10,9 +12,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotEmpty(message = "cannot be empty")
     @Column(name = "firstname")
     private String firstName;
 
+    @NotEmpty(message = "cannot be empty")
     @Column(name = "lastname")
     private String lastName;
 
